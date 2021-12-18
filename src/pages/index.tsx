@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import Button from '@mui/material/Button';
+import { ScholarTable } from '../components';
 
 const Home: NextPage = () => {
   return (
@@ -11,8 +11,7 @@ const Home: NextPage = () => {
         <meta name="description" content="My Axie Infinity Scholars Tracker" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Button variant="contained">Login</Button>
+      <ScholarTable />
     </div>
   );
 };
