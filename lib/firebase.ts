@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,15 +29,43 @@ const app = initializeApp(firebaseConfig);
 // Google Auth  Provider
 const GoogleProvider = new GoogleAuthProvider();
 
+// Firestore
+const db = getFirestore();
+
 // Exports
-export const auth = getAuth();
-class User {
-  login() {
-    signInWithPopup(auth, GoogleProvider);
+
+class Auth {
+  auth = getAuth();
+
+  async login() {
+    await signInWithPopup(GoogleUser.auth, GoogleProvider);
   }
-  logout() {
-    signOut(auth);
+  async logout() {
+    await signOut(GoogleUser.auth);
   }
 }
 
-export const GoogleUser = new User();
+export class User {
+  uid: string;
+
+  constructor(uid: string) {
+    this.uid = uid;
+  }
+
+  async addUser() {
+    try {
+      const docRef = await addDoc(collection(db, `users/${this.uid}`), {
+        first: 'Alan',
+        middle: 'Mathison',
+        last: 'Turing',
+        born: 1912,
+      });
+
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  }
+}
+
+export const GoogleUser = new Auth();

@@ -5,10 +5,11 @@ import '@fontsource/roboto/700.css';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { UserContext } from '../../lib/context';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <UserContext.Provider value={{ scholar: {}, username: 'test' }}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>Scholars Tracker</title>
@@ -16,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </UserContext.Provider>
   );
 }
 

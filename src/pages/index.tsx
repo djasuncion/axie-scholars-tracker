@@ -1,18 +1,24 @@
+import { useContext } from 'react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Button from '@mui/material/Button';
-import { GoogleUser, auth } from '../../lib/firebase';
+import { GoogleUser, User } from '../../lib/firebase';
+import { UserContext } from '../../lib/context';
 
 import { ScholarTable } from '../components';
-import { Typography } from '@mui/material';
+import { Typography, Button, CircularProgress } from '@mui/material';
 
 const Home: NextPage = () => {
-  const [user, loading, error] = useAuthState(auth);
-  console.log(`
-  Loading: ${loading}
-  Error: ${error}
-  User: ${user}`);
+  const [user, loading, error] = useAuthState(GoogleUser.auth);
+  const { scholar, username } = useContext(UserContext);
+
+  console.log(scholar, username);
+
+  function addNewUser() {
+    if (user) {
+      const newUser = new User(user.uid);
+      newUser.addUser();
+    }
+  }
 
   if (user) {
     return (
@@ -28,6 +34,8 @@ const Home: NextPage = () => {
         <Typography>{user.email}</Typography>
       </>
     );
+  } else if (loading) {
+    return <CircularProgress />;
   } else {
     return (
       <Button variant="contained" color="primary" onClick={GoogleUser.login}>
