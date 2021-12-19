@@ -1,16 +1,22 @@
 import { createContext } from 'react';
+import { User } from './firebase';
 
-interface Scholar {
-  name?: string;
+interface GoogleUser {
+  displayName?: string;
+  email?: string;
 }
-interface UserData {
-  scholar?: Scholar | null;
-  username: string;
+
+export interface UserData {
+  uid?: string;
+  user?: GoogleUser;
+  username?: string;
 }
 
 const defaultState = {
-  scholar: {
-    name: 'Axie',
+  uid: '',
+  user: {
+    displayName: 'Jane Doe',
+    email: 'janedoe@there.com',
   },
   username: '',
 };

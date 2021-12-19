@@ -8,11 +8,9 @@ import { ScholarTable } from '../components';
 import { Typography, Button } from '@mui/material';
 
 const Home: NextPage = () => {
-  const { scholar, username } = useContext(UserContext);
+  const { user, username } = useContext(UserContext);
 
-  console.log(scholar);
-
-  if (scholar) {
+  if (user) {
     return (
       <>
         <Button

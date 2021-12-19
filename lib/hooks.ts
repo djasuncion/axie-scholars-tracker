@@ -3,11 +3,7 @@ import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { GoogleUser, db } from './firebase';
 
-interface Displayable {
-  uid: string;
-  displayName?: string;
-  email: string;
-}
+import { UserData } from './context';
 
 export function useUserData() {
   const [user] = useAuthState(GoogleUser.auth);
@@ -15,7 +11,7 @@ export function useUserData() {
 
   useEffect(() => {
     let unsubscribe: any;
-    async function addNewUser(data: Displayable) {
+    async function addNewUser(data: UserData) {
       const docRef = await setDoc(doc(db, `users/${data.uid}`), {});
       unsubscribe = onSnapshot(doc(db, `users/${data.uid}`), (doc) => {
         setUsername(doc.data()?.username);
@@ -25,9 +21,14 @@ export function useUserData() {
     if (user) {
       const myUser = {
         uid: user.uid || '',
-        displayName: user.displayName || '',
-        email: user.email || '',
+        user:
+          {
+            displayName: user.displayName || '',
+            email: user.email || '',
+          } || null,
+        username: '',
       };
+
       addNewUser(myUser);
     } else {
       setUsername('');
