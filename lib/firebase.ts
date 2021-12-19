@@ -30,7 +30,7 @@ const app = initializeApp(firebaseConfig);
 const GoogleProvider = new GoogleAuthProvider();
 
 // Firestore
-const db = getFirestore();
+export const db = getFirestore();
 
 // Exports
 
