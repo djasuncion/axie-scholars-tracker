@@ -11,6 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>Scholars Tracker</title>
+        <meta name="description" content="My Axie Infinity Scholars Tracker" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
     </>
