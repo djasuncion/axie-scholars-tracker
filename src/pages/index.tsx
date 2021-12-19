@@ -10,6 +10,8 @@ import { Typography, Button } from '@mui/material';
 const Home: NextPage = () => {
   const { user, username } = useContext(UserContext);
 
+  console.log(user);
+
   if (user) {
     return (
       <>
@@ -20,8 +22,8 @@ const Home: NextPage = () => {
         >
           Logout
         </Button>
-        <Typography>displayName</Typography>
-        <Typography>email</Typography>
+        <Typography>{user.displayName}</Typography>
+        <Typography>{user.email}</Typography>
       </>
     );
   } else {
