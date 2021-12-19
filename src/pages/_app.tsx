@@ -6,36 +6,13 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { UserContext } from '../../lib/context';
-import { useState, useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { GoogleUser, db } from '../../lib/firebase';
-
-import { doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { useUserData } from '../../lib/hooks';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [user] = useAuthState(GoogleUser.auth);
-  const [username, setUsername] = useState(null);
+  const userData = useUserData();
 
-  useEffect(() => {
-    let unsubscribe;
-
-    if (user) {
-      addNewUser(user.uid);
-    }
-
-    async function addNewUser(uid: string) {
-      const docRef = await setDoc(doc(db, `users/${uid}`), {
-        first: 'Alan',
-        middle: 'Mathison',
-        last: 'Turing',
-        born: 1912,
-      });
-    }
-
-    return unsubscribe;
-  }, [user]);
   return (
-    <UserContext.Provider value={{ scholar: {}, username: 'test' }}>
+    <UserContext.Provider value={userData}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>Scholars Tracker</title>
